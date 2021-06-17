@@ -11,4 +11,13 @@
 </ol>
 <img src="${}">
 */
-<p> test!!!</p>
+
+
+function onFormSubmit(event) {
+   event.preventDefault();
+   console.log(`${onFormSubmit} is working`);
+ }
+ 
+ const form = document.getElementById('launchChecklistForm');
+ form.addEventListener('submit', onFormSubmit);
+
