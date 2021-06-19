@@ -1,33 +1,30 @@
-// Write your JavaScript code here!
-// window.addEventListener('load', function(){
-//    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
-//       return response.json();
-//    }).then(function(json){
-//       console.log(json);
-//       const missionTarget = document.querySelector('#missionTarget');
-//       let pilots = '';
-//       for (pilot of json){
-//          pilots += `
-//          <div class="pilot">
-//             <div class ="details">
-//             <h2>Mission Destination</h2>
-//             <ol>
-//                <li>Name: ${pilot.name}</li>
-//                <li>Diameter: ${pilot.diameter}</li>
-//                <li>Star: ${pilot.star}</li>
-//                <li>Distance from Earth: ${pilot.distance}</li>
-//                <li>Number of Moons: ${pilot.moons}</li>
-//             </ol>
-//             </div>
-//             <img src="${pilot.image}">
-//             </div>`;
-//       }
-//       missionTarget.innerHTML = pilots;
-//    });
-// });
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!*/
+// Planetary data
+window.addEventListener('submit', function(){
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+      return response.json();
+   }).then(function(json){
+      console.log(json);
+      const missionTarget = document.querySelector('#missionTarget');
+      let planet = json[3];
+      let planetDiv =  `<div class="planet">
+      <div class ="details">
+      <h2>Mission Destination</h2>
+      <ol>
+         <li>Name: ${planet.name}</li>
+         <li>Diameter: ${planet.diameter}</li>
+         <li>Star: ${planet.star}</li>
+         <li>Distance from Earth: ${planet.distance}</li>
+         <li>Number of Moons: ${planet.moons}</li>
+      </ol>
+      </div>
+      <img src="${planet.image}">
+      </div>`;
+      missionTarget.innerHTML = planetDiv;
+   });
+});
 
 
+// add validation
 
 function onFormSubmit(event) {
 
@@ -59,7 +56,6 @@ function onFormSubmit(event) {
    return;
    }
 
-   // validation passed
 
    // update shuttle requirements..
 
@@ -68,7 +64,6 @@ function onFormSubmit(event) {
    const fuelStatus = document.getElementById("fuelStatus");
    const cargoStatus = document.getElementById("cargoStatus");
 
-   // add pilot name
    console.log(pilotStatus.innerHTML);
    pilotStatus.innerHTML = `Pilot ${pilotNameInput.value} is ready for launch`;
    copilotStatus.innerHTML = `Co-pilot ${coPilotNameInput.value} is ready for launch`;
@@ -76,24 +71,24 @@ function onFormSubmit(event) {
    let isReady = true;
 
    if (fuelLevelInput.value < 10000) {
-      //alert("There's not enough fuel for the journey!");
       document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
-      fuelStatus.innerHTML = "There's not enough fuel for the journey!";
-      document.getElementById("launchStatusCheck").style.backgroundcolor = "red";
+      fuelStatus.innerHTML = "Fuel level too low for launch";
+      document.getElementById("launchStatus").style.color = "red";
       isReady = false;
    } 
 
    if (cargoMassInput.value > 10000) {
-      //alert("There's too much mass for the shuttle to take off!");
       document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
-      cargoStatus.innerHTML = "There's too much mass for the shuttle to take off!";
-      document.getElementById("launchStatusCheck").style.backgroundcolor = "red";
+      cargoStatus.innerHTML = "Cargo mass too high for launch";
+      document.getElementById("launchStatus").style.color = "red";
       isReady = false;
    } 
 
    if (isReady){
       document.getElementById("launchStatus").innerHTML = "Shuttle is ready for launch";
-      document.getElementById("launchStatusCheck").style.backgroundcolor = "green"; 
+      fuelStatus.innerHTML = "Fuel is enough for launch";
+      cargoStatus.innerHTML = "Cargo mass is low enough for launch";
+      document.getElementById("launchStatus").style.color = "green"; 
    }
    
    document.getElementById("faultyItems").style.visibility = "visible";
