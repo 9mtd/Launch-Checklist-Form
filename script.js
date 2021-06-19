@@ -1,16 +1,32 @@
 // Write your JavaScript code here!
+// window.addEventListener('load', function(){
+//    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+//       return response.json();
+//    }).then(function(json){
+//       console.log(json);
+//       const missionTarget = document.querySelector('#missionTarget');
+//       let pilots = '';
+//       for (pilot of json){
+//          pilots += `
+//          <div class="pilot">
+//             <div class ="details">
+//             <h2>Mission Destination</h2>
+//             <ol>
+//                <li>Name: ${pilot.name}</li>
+//                <li>Diameter: ${pilot.diameter}</li>
+//                <li>Star: ${pilot.star}</li>
+//                <li>Distance from Earth: ${pilot.distance}</li>
+//                <li>Number of Moons: ${pilot.moons}</li>
+//             </ol>
+//             </div>
+//             <img src="${pilot.image}">
+//             </div>`;
+//       }
+//       missionTarget.innerHTML = pilots;
+//    });
+// });
+/* This block of code shows how to format the HTML once you fetch some planetary JSON!*/
 
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!
-<h2>Mission Destination</h2>
-<ol>
-   <li>Name: ${pilot.name}</li>
-   <li>Diameter: ${pilot.diameter}</li>
-   <li>Star: ${pilot.star}</li>
-   <li>Distance from Earth: ${pilot.distance}</li>
-   <li>Number of Moons: ${pilot.moons}</li>
-</ol>
-<img src="${pilot.image}">
-*/
 
 
 function onFormSubmit(event) {
@@ -42,33 +58,49 @@ function onFormSubmit(event) {
    event.preventDefault();
    return;
    }
+
+   // validation passed
+
+   // update shuttle requirements..
+
+   const pilotStatus = document.getElementById("pilotStatus");
+   const copilotStatus = document.getElementById("copilotStatus");
+   const fuelStatus = document.getElementById("fuelStatus");
+   const cargoStatus = document.getElementById("cargoStatus");
+
+   // add pilot name
+   console.log(pilotStatus.innerHTML);
+   pilotStatus.innerHTML = `Pilot ${pilotNameInput.value} is ready for launch`;
+   copilotStatus.innerHTML = `Co-pilot ${coPilotNameInput.value} is ready for launch`;
+
+   let isReady = true;
+
+   if (fuelLevelInput.value < 10000) {
+      //alert("There's not enough fuel for the journey!");
+      document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
+      fuelStatus.innerHTML = "There's not enough fuel for the journey!";
+      document.getElementById("launchStatusCheck").style.backgroundcolor = "red";
+      isReady = false;
+   } 
+
+   if (cargoMassInput.value > 10000) {
+      //alert("There's too much mass for the shuttle to take off!");
+      document.getElementById("launchStatus").innerHTML = "Shuttle not ready for launch";
+      cargoStatus.innerHTML = "There's too much mass for the shuttle to take off!";
+      document.getElementById("launchStatusCheck").style.backgroundcolor = "red";
+      isReady = false;
+   } 
+
+   if (isReady){
+      document.getElementById("launchStatus").innerHTML = "Shuttle is ready for launch";
+      document.getElementById("launchStatusCheck").style.backgroundcolor = "green"; 
+   }
+   
+   document.getElementById("faultyItems").style.visibility = "visible";
+   event.preventDefault();
 }
 
 
  const form = document.getElementById('launchChecklistForm');
  form.addEventListener('submit', onFormSubmit);
 
-
-
-// Do not allow form submission if input value is invalid
-//isNaN function that determine if a value does not convert to a number
-
-      // var x=document.forms["launchChecklistForm"]["pilotName"].value;
-      // var regex=/^[a-zA-Z]+$/;
-      // if (!x.match(regex)) 
-      // {
-      //    alert("pilot name must be letters");
-      //    return false;
-      // }
-      // var x=document.forms["launchChecklistForm"]["fuelLevel"].value;
-      // if (isNaN(x)) 
-      // {
-      //    alert("Fuel Level must be numbers");
-      //    return false;
-      // }
-      // var x=document.forms["launchChecklistForm"]["cargoMass"].value;
-      // if (isNaN(x)) 
-      // {
-      //    alert("Cargo mass must be numbers");
-      //    return false;
-      // }
