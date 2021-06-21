@@ -40,7 +40,6 @@ function onFormSubmit(event) {
    let pilotNameInput = document.querySelector("input[name=pilotName]");
    if (pilotNameInput.value.trim() === "" || !isNaN(pilotNameInput.value.trim())) {
    alert("pilotName is invalid!");
-   event.preventDefault();
    return;
    }
 
@@ -48,21 +47,18 @@ function onFormSubmit(event) {
    let coPilotNameInput = document.querySelector("input[name=copilotName]");
    if (coPilotNameInput.value.trim() === "" || !isNaN(coPilotNameInput.value.trim())) {
    alert("coPilotName is invalid!");
-   event.preventDefault();
    return;
    }
 
    let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
    if (fuelLevelInput.value.trim() === "" || isNaN(fuelLevelInput.value.trim())) {
    alert("fuelLevel is invalid!");
-   event.preventDefault();
    return;
    }
 
    let cargoMassInput = document.querySelector("input[name=cargoMass]");
    if (cargoMassInput.value.trim() === "" || isNaN(cargoMassInput.value.trim())) {
    alert("cargoMass is invalid!");
-   event.preventDefault();
    return;
    }
 
