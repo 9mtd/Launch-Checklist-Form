@@ -1,27 +1,36 @@
 // Planetary data
-window.addEventListener('submit', function(){
-   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
-      return response.json();
-   }).then(function(json){
-      console.log(json);
-      const missionTarget = document.querySelector('#missionTarget');
-      let planet = json[3];
-      let planetDiv =  `<div class="planet">
-      <div class ="details">
-      <h2>Mission Destination</h2>
-      <ol>
-         <li>Name: ${planet.name}</li>
-         <li>Diameter: ${planet.diameter}</li>
-         <li>Star: ${planet.star}</li>
-         <li>Distance from Earth: ${planet.distance}</li>
-         <li>Number of Moons: ${planet.moons}</li>
-      </ol>
-      </div>
-      <img src="${planet.image}">
-      </div>`;
-      missionTarget.innerHTML = planetDiv;
+
+let planets = [];
+
+window.addEventListener('load', function() {
+    
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+     return response.json();
+   }).then(function(json) {
+     console.log(json);
+     const missionTarget = document.querySelector('#missionTarget');
+     for (planet of json) {
+      let planetId = `
+     <div class="planet">
+       <div class ="details">
+       <h2>Mission Destination</h2>
+       <ol>
+          <li>Name: ${planet.name}</li>
+          <li>Diameter: ${planet.diameter}</li>
+          <li>Star: ${planet.star}</li>
+          <li>Distance from Earth: ${planet.distance}</li>
+          <li>Number of Moons: ${planet.moons}</li>
+       </ol>
+       </div>
+       <img src="${planet.image}">
+       </div>
+       `;
+       planets.push(planetId);
+     }
+     missionTarget.innerHTML = planets.join('');
    });
-});
+ });
+
 
 
 // add validation
@@ -29,14 +38,15 @@ window.addEventListener('submit', function(){
 function onFormSubmit(event) {
 
    let pilotNameInput = document.querySelector("input[name=pilotName]");
-   if (pilotNameInput.value.trim() === "") {
+   if (pilotNameInput.value.trim() === "" || !isNaN(pilotNameInput.value.trim())) {
    alert("pilotName is invalid!");
    event.preventDefault();
    return;
    }
 
+
    let coPilotNameInput = document.querySelector("input[name=copilotName]");
-   if (coPilotNameInput.value.trim() === "") {
+   if (coPilotNameInput.value.trim() === "" || !isNaN(coPilotNameInput.value.trim())) {
    alert("coPilotName is invalid!");
    event.preventDefault();
    return;
@@ -93,6 +103,8 @@ function onFormSubmit(event) {
    
    document.getElementById("faultyItems").style.visibility = "visible";
    event.preventDefault();
+
+   missionTarget.innerHTML = planets[3];
 }
 
 
